@@ -8,15 +8,28 @@ namespace GradeBook
         static void Main(string[] args)
         {
 
-            var book = new Book("Ruby's Grade Book");
+            //var book = new InMemoryBook("Rubys Grade Book");
+            IBook book = new DiskBook("Rubys Grade Book");
             book.GradeAdded += OnGradeAdded;
+            EnterGrades(book);
 
+            var stats = book.GetStatistics();
+
+            Console.WriteLine($"For the book named {book.Name}");
+            Console.WriteLine($"Your highest grade is {stats.High:N1}");
+            Console.WriteLine($"Your lowest grade is {stats.Low:N1}");
+            Console.WriteLine($"Your average grade is {stats.Average:N1}");
+            Console.WriteLine($"The letter grade is {stats.Letter}");
+
+        }
+
+        private static void EnterGrades(IBook book)
+        {
             do
             {
                 Console.WriteLine("Please insert your grades. Quit with Q:");
                 var input = Console.ReadLine();
                 if (input == "Q") { break; }
-
 
                 try
                 {
@@ -37,15 +50,6 @@ namespace GradeBook
                 }
 
             } while (true);
-
-            var stats = book.GetStatistics();
-
-            Console.WriteLine($"For the book named {book.Name}");
-            Console.WriteLine($"Your highest grade is {stats.High:N1}");
-            Console.WriteLine($"Your lowest grade is {stats.Low:N1}");
-            Console.WriteLine($"Your average grade is {stats.Average:N1}");
-            Console.WriteLine($"The letter grade is {stats.Letter}");
-
         }
 
         static void OnGradeAdded(object sender, EventArgs e)
