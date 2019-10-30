@@ -9,9 +9,7 @@ namespace GradeBook
         {
 
             var book = new Book("Ruby's Grade Book");
-            //book.AddGrade(89.7);
-            //book.AddGrade(77.7);
-            //book.AddGrade(77.7);
+            book.GradeAdded += OnGradeAdded;
 
             do
             {
@@ -48,6 +46,11 @@ namespace GradeBook
             Console.WriteLine($"Your average grade is {stats.Average:N1}");
             Console.WriteLine($"The letter grade is {stats.Letter}");
 
+        }
+
+        static void OnGradeAdded(object sender, EventArgs e)
+        {
+            Console.WriteLine("OnGradedAdded, a grade was added");
         }
     }
 }
